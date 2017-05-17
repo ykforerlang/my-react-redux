@@ -59,9 +59,7 @@ module.exports = {
         failOnWarning: false,
         failOnError: true
     },
-
     module: {
-        // Runs before loaders
         preLoaders: [
             {
                 test: /\.js$/,
@@ -69,26 +67,26 @@ module.exports = {
                 loader: 'eslint'
             }
         ],
-        // loaders handle the assets, like transforming sass to css or jsx to js.
-        loaders: [{
-            test: /\.js?$/,
-            exclude: /node_modules/,
-            loader: 'babel'
-        }, {
-            test: /\.json?$/,
-            loader: 'json'
-        }, {
-            test: /\.scss$/,
-            // we extract the styles into their own .css file instead of having
-            // them inside the js.
-            loader: ExtractTextPlugin.extract('style', 'css?modules&localIdentName=[name]---[local]---[hash:base64:5]!sass')
-        }, {
-            test: /\.woff(2)?(\?[a-z0-9#=&.]+)?$/,
-            loader: 'url?limit=10000&mimetype=application/font-woff'
-        }, {
-            test: /\.(ttf|eot|svg)(\?[a-z0-9#=&.]+)?$/,
-            loader: 'file'
-        }]
+        loaders: [
+            {
+                test: /\.js?$/,
+                exclude: /node_modules/,
+                loader: 'babel'
+            },
+            {
+                test: /\.(png|jpg)$/,
+                exclude: /node_modules/,
+                loader: 'url-loader?limit=8192'
+            },
+            {
+                test: /\.json?$/,
+                loader: 'json'
+            },
+            {
+                test: /\.(less|css)$/,
+                loader: 'style!css!less'
+            }
+        ]
     },
     postcss: [
         require('autoprefixer')
