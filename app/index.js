@@ -8,7 +8,7 @@ import configureStore from './store/configureStore';
 
 import Root from './router/Root';
 
-const store = configureStore();
+export const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
 
 render(
