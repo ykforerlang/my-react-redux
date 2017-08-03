@@ -1,9 +1,8 @@
 export const addCount = () => ({
-    type:"HOME_addCount"
+    type: 'HOME_addCount',
 })
 
-export const inputChange = (value) =>({
+export const inputChange = value => ({
     type: 'HOME_inputChange',
-    value
+    value,
 })
-

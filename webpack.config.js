@@ -23,31 +23,45 @@ module.exports = {
           inject: 'body',
           filename: 'index.html'
         }),
-        new webpack.optimize.OccurenceOrderPlugin(),
+        //new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin(),
+        //new webpack.NoErrorsPlugin(),
         new webpack.DefinePlugin({
           'process.env.NODE_ENV': JSON.stringify('development')
         })
     ],
-    eslint: {
-        configFile: '.eslintrc',
-        failOnWarning: false,
-        failOnError: false
-    },
+    // eslint: {
+    //     configFile: '.eslintrc',
+    //     failOnWarning: false,
+    //     failOnError: false
+    // },
     module: {
-        preLoaders: [
+        // preLoaders: [
+        //     {
+        //         test: /\.js$/,
+        //         exclude: /node_modules/,
+        //         loader: 'eslint'
+        //     }
+        // ],
+        loaders: [
             {
                 test: /\.js$/,
+                enforce: "pre",
+                loader: "eslint-loader",
                 exclude: /node_modules/,
-                loader: 'eslint'
-            }
-        ],
-        loaders: [
+                options: {
+                    emitWarning: true,
+                    emitError: false,
+                    //failOnWarning: false,
+                    //failOnError: true,
+                    useEslintrc: false,
+                    configFile: path.join(__dirname, ".eslintrc")
+                }
+            },
             {
                 test: /\.js?$/,
                 exclude: /node_modules/,
-                loader: 'babel'
+                loader: 'babel-loader'
             },
             {
                 test: /\.(png|jpg)$/,

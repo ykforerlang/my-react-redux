@@ -1,16 +1,15 @@
-import React from 'react';
-import {store} from '../../index'
+import React from 'react'
 import { connect } from 'react-redux'
+import { store } from '../../index'
 
-let Sub = () =>
-    <div>
-        sub
-    </div>;
-
-Sub = connect((state) => state)(Sub)
-
-const PropsStore = () => (
-    <Sub store = {store}/>
+let Sub = () => (
+    <div>sub</div>
 )
 
-export  default PropsStore
+Sub = connect(state => state)(Sub)
+
+const PropsStore = () => (
+    <Sub store={store} />
+)
+
+export default PropsStore
