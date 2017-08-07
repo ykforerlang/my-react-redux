@@ -1,11 +1,11 @@
 export const dispatchToPropsHelper = (action, dispatch) => {
     const result = {}
-    for (let key in action) {
-        let vFn = action[key]
-        result[key] = function() {
-            var argsArray = Array.prototype.slice.call(arguments)
-            dispatch(vFn.apply(null, argsArray))
-        }
-    }
+    const keys = Object.keys(action)
+    keys.forEach(key => {
+        const vFn = action[key]
+        result[key] = (...args) => dispatch(vFn(args))
+    })
     return result
 }
+
+export const valueSS = value => `l am ${value}`
