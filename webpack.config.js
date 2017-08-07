@@ -1,11 +1,13 @@
 'use strict';
 
-var path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ROOT_PATH = path.resolve(__dirname)
+const WebpackBundleSizeAnalyzerPlugin = require('webpack-bundle-size-analyzer').WebpackBundleSizeAnalyzerPlugin
 
 module.exports = {
-    devtool: 'eval-source-map',
+    devtool: 'cheap-module-source-map',
     entry: [
         'webpack-dev-server/client?http://localhost:3000',
         'webpack/hot/only-dev-server',
@@ -28,7 +30,11 @@ module.exports = {
         //new webpack.NoErrorsPlugin(),
         new webpack.DefinePlugin({
           'process.env.NODE_ENV': JSON.stringify('development')
-        })
+        }),
+        // new webpack.DllReferencePlugin({
+        //     manifest: require(path.resolve(ROOT_PATH, 'manifest.json')),
+        //     context: ROOT_PATH,
+        // }),
     ],
     // eslint: {
     //     configFile: '.eslintrc',
@@ -70,11 +76,11 @@ module.exports = {
             },
             {
                 test: /\.json?$/,
-                loader: 'json'
+                loader: 'json-loader'
             },
             {
                 test: /\.(less|css)$/,
-                loader: 'style!css!less'
+                loader: 'style-loader!css-loader!less-loader'
             }
         ]
     }
