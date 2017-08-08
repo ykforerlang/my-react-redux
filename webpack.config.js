@@ -78,9 +78,24 @@ module.exports = {
                 test: /\.json?$/,
                 loader: 'json-loader'
             },
+            // {
+            //     test: /\.(less|css)$/,
+            //     loader: 'style-loader!css-loader!less-loader'
+            // },
             {
                 test: /\.(less|css)$/,
-                loader: 'style-loader!css-loader!less-loader'
+                exclude: [
+                    path.resolve(__dirname, 'app/styles'),
+                    path.resolve(__dirname, 'node_modules')
+                ],
+                loader: 'style-loader!css-loader?modules&localIdentName=[name]__[local]___[hash:base64:5]!less-loader?sourceMap=true'
+            }, {
+                test: /\.(less|css)$/,
+                include: [
+                    path.resolve(__dirname, 'app/styles'),
+                    path.resolve(__dirname, 'node_modules')
+                ],
+                loader: 'style-loader!css-loader!less-loader?sourceMap=true'
             }
         ]
     }
