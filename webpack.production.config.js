@@ -21,7 +21,7 @@ module.exports = {
         // webpack gives your modules and chunks ids to identify them. Webpack can vary the
         // distribution of the ids to get the smallest id length for often used ids with
         // this plugin
-        new webpack.optimize.OccurenceOrderPlugin(),
+        //new webpack.optimize.OccurenceOrderPlugin(),
 
         // handles creating an index.html file and injecting assets. necessary because assets
         // change name because the hash part changes. We want hash name changes to bust cache
@@ -54,24 +54,38 @@ module.exports = {
     ],
 
     // ESLint options
-    eslint: {
-        configFile: '.eslintrc',
-        failOnWarning: false,
-        failOnError: true
-    },
+    // eslint: {
+    //     configFile: '.eslintrc',
+    //     failOnWarning: false,
+    //     failOnError: true
+    // },
     module: {
-        preLoaders: [
+        // preLoaders: [
+        //     {
+        //         test: /\.js$/,
+        //         exclude: /node_modules/,
+        //         loader: 'eslint'
+        //     }
+        // ],
+        loaders: [
             {
                 test: /\.js$/,
+                enforce: "pre",
+                loader: "eslint-loader",
                 exclude: /node_modules/,
-                loader: 'eslint'
-            }
-        ],
-        loaders: [
+                options: {
+                    emitWarning: true,
+                    emitError: false,
+                    //failOnWarning: false,
+                    //failOnError: true,
+                    useEslintrc: false,
+                    configFile: path.join(__dirname, ".eslintrc")
+                }
+            },
             {
                 test: /\.js?$/,
                 exclude: /node_modules/,
-                loader: 'babel'
+                loader: 'babel-loader'
             },
             {
                 test: /\.(png|jpg)$/,
@@ -80,15 +94,15 @@ module.exports = {
             },
             {
                 test: /\.json?$/,
-                loader: 'json'
+                loader: 'json-loader'
             },
             {
                 test: /\.(less|css)$/,
-                loader: 'style!css!less'
+                loader: 'style-loader!css-loader!less-loader'
             }
         ]
     },
-    postcss: [
-        require('autoprefixer')
-    ]
+    // postcss: [
+    //     require('autoprefixer')
+    // ]
 };
